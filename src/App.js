@@ -99,7 +99,7 @@ class FilterableContactTable extends React.Component {
         <h1>Contact List</h1>
         <SearchBar
           filterText={this.state.filterText}
-          onFilterTextInput={this.handleFilterTextInput}}
+          onFilterTextInput={this.handleFilterTextInput}
           />
           <NewContactRow addContact={this.addContact}/>
           <ContactTable
@@ -110,3 +110,24 @@ class FilterableContactTable extends React.Component {
     );
   }
 }
+
+class NewContactRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const target = event.target;
+    const name = target.name.value;
+    const phone = target.phone.value;
+    const email = target.email.value;
+
+    var contact = {
+      name : name,
+      phone: phone,
+      email: email
+    };
+    this.props.addContact(contact);
+  }
