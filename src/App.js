@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "./App.css";
 
 class ContactRow extends React.Component {
@@ -20,7 +21,7 @@ class ContactTable extends React.Component {
       if (contact.name.indexOf(this.props.filterText) === -1) {
         return;
       }
-      rows.push(<contactRow key={contact.key} contact={contact} />);
+      rows.push(<ContactRow key={contact.key} contact={contact} />);
     });
     return (
       <table className="table table-hover">
@@ -73,8 +74,8 @@ class FilterableContactTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterText: '',
-      contacts : []
+      filterText: "",
+      contacts: [],
     };
     this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
     this.addContact = this.addContact.bind(this);
@@ -82,14 +83,14 @@ class FilterableContactTable extends React.Component {
 
   addContact(contact) {
     var timestamp = new Date().getTime();
-    contact['key'] = timestamp;
+    contact["key"] = timestamp;
     this.state.contacts.push(contact);
     this.setState({ contacts: this.state.contacts });
   }
 
   handleFilterTextInput(filterText) {
-    this,setState({
-      filterText: filterText
+    this.setState({
+      filterText: filterText,
     });
   }
 
@@ -100,12 +101,12 @@ class FilterableContactTable extends React.Component {
         <SearchBar
           filterText={this.state.filterText}
           onFilterTextInput={this.handleFilterTextInput}
-          />
-          <NewContactRow addContact={this.addContact}/>
-          <ContactTable
-            contacts={this.state.contacts}
-            filterText={this.state.filterText}
-          />
+        />
+        <NewContactRow addContact={this.addContact} />
+        <ContactTable
+          contacts={this.state.contacts}
+          filterText={this.state.filterText}
+        />
       </div>
     );
   }
@@ -125,9 +126,58 @@ class NewContactRow extends React.Component {
     const email = target.email.value;
 
     var contact = {
-      name : name,
+      name: name,
       phone: phone,
-      email: email
+      email: email,
     };
     this.props.addContact(contact);
   }
+
+  render() {
+    return (
+      <form className="form-inline" onSubmit={this.handleSubmit}>
+        <div className="form-group row">
+          <div className="col-md-3">
+            <input
+              type="text"
+              className="form-control"
+              name="name"
+              id="nameInput"
+              placeholder="Name"
+            />
+          </div>
+          <div className="col-md-3">
+            <input
+              type="text"
+              name="phone"
+              className="form-control"
+              id="phoneInput"
+              placeholder="Phone"
+            />
+          </div>
+          <div className="col-md-3">
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              id="emailInput"
+              placeholder="Email"
+            />
+          </div>
+          <div className="col-md-3">
+            <button type="submit" className="btn btn-primary">
+              <i className="fa fa-fw fa-plus"></i>Add
+            </button>
+          </div>
+        </div>
+      </form>
+    );
+  }
+}
+
+var CONTACTS = [];
+
+ReactDOM.render(
+  <FilterableContactTable contact={CONTACTS} />,
+  document.getElementById("container")
+);
