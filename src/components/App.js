@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./App.css";
 
-class ContactRow extends React.Component {
+/*class ContactRow extends React.Component {
   render() {
     return (
       <tr>
