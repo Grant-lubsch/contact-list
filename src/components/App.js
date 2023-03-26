@@ -1,7 +1,7 @@
 import React from "react";
 //import ReactDOM from "react-dom";
-import "./App.css";
-import Home from "./Home";
+import "../App.css";
+import Home from "./home.js";
 
 function App() {
   return (
